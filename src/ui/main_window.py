@@ -6,14 +6,20 @@ from PySide6.QtWidgets import (
     QComboBox,
     QPushButton,
     QLabel,
-    QGroupBox
+    QGroupBox,
+    QStatusBar
 )
+from src.ui.widgets.connection_dialog import ConnectionDialog
+from src.plc.plc_client import PLCClient
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("PLC 사전 테스트 프로그램")
         self.setGeometry(100, 100, 600, 400)
+        self.setStatusBar(QStatusBar())
+
+        self.plc_client = PLCClient()
 
         # Central Widget
         central_widget = QWidget()
@@ -49,6 +55,38 @@ class MainWindow(QMainWindow):
         connection_group = QGroupBox("연결 설정")
         connection_layout = QHBoxLayout()
         self.connection_button = QPushButton("연결 설정")
+        self.connection_button.clicked.connect(self.toggle_connection)
         connection_layout.addWidget(self.connection_button)
         connection_group.setLayout(connection_layout)
         main_layout.addWidget(connection_group)
+
+        self.update_ui_for_connection_status(False) # Initial UI state
+
+    def toggle_connection(self):
+        if not self.plc_client.connected:
+            dialog = ConnectionDialog(self)
+            if dialog.exec():
+                ip, port = dialog.get_connection_details()
+                success, message = self.plc_client.connect(ip, port)
+                self.statusBar().showMessage(message, 5000)
+                self.update_ui_for_connection_status(success)
+        else:
+            self.plc_client.disconnect()
+            self.statusBar().showMessage("PLC 연결이 해제되었습니다.", 5000)
+            self.update_ui_for_connection_status(False)
+
+    def update_ui_for_connection_status(self, connected):
+        self.common_button.setEnabled(connected)
+        self.normal_button.setEnabled(connected)
+        self.abnormal_button.setEnabled(connected)
+        self.equipment_combo.setEnabled(not connected)
+
+        if connected:
+            self.connection_button.setText("연결 해제")
+            self.connection_button.setProperty("secondary", True)
+        else:
+            self.connection_button.setText("연결 설정")
+            self.connection_button.setProperty("secondary", False)
+        
+        # Re-apply style to update property changes
+        self.connection_button.style().polish(self.connection_button)

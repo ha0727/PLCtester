@@ -1,0 +1,115 @@
+* {
+    font-family: 'Pretendard';
+}
+QMainWindow {
+    background-color: #f0f2f5;
+}
+QGroupBox {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #ffffff;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    padding: 0 10px;
+}
+
+
+
+/* 다이얼로그 일반 라벨 */
+QLabel[class="dialog-label"] {
+    font-weight: 500; /* Medium */
+    font-size: 14px;
+    padding: 8px 0;
+}
+
+/* 폼 레이아웃 라벨 */
+QLabel[class="form-label"] {
+    font-weight: 500; /* Medium */
+}
+
+QLabel {
+    font-size: 12px;
+    color: #333;
+}
+QLineEdit, QComboBox {
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-weight: 500; /* Medium */
+}
+QComboBox::drop-down {
+    border: none;
+}
+QComboBox::down-arrow {
+    image: url(down_arrow.png); /* A proper icon should be used */
+}
+
+QDialogButtonBox {
+    margin-top: 25px; /* 버튼 상단에 여백 추가 */
+}
+
+QPushButton {
+    font-size: 13px; /* 1px 키움 */
+    font-weight: 500; /* Medium */
+    color: #fff;
+    background-color: #0078d7;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+QPushButton:hover {
+    background-color: #005a9e;
+}
+QPushButton:pressed {
+    background-color: #004578;
+}
+/* '취소' 또는 '연결 해제'와 같은 보조 버튼 스타일 */
+QPushButton[secondary="true"] {
+    background-color: #6c757d;
+}
+QPushButton[secondary="true"]:hover {
+    background-color: #5a6268;
+}
+QPushButton[secondary="true"]:pressed {
+    background-color: #545b62;
+}
+QTableWidget {
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    gridline-color: #e0e0e0;
+    background-color: #ffffff;
+}
+QHeaderView::section {
+    background-color: #e9ecef;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #d0d0d0;
+    font-weight: bold;
+}
+QTableWidget::item {
+    padding: 8px;
+}
+QTableWidget::item:selected {
+    background-color: #0078d7;
+    color: white;
+}
+/* 사용자 정의 속성을 사용한 행 색상 지정 */
+QTableWidget QTableWidgetItem[status="Pass"] {
+    background-color: #d4edda;
+    color: #155724;
+}
+QTableWidget QTableWidgetItem[status="Fail"] {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+QStatusBar {
+    font-size: 11px;
+}
